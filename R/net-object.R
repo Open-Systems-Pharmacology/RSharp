@@ -87,6 +87,10 @@ NetObject <- R6::R6Class(
     },
     .throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName))
+    },
+    # @description Method called on object destruction
+    finalize = function() {
+      private$.pointer <- NULL
     }
   ),
   public = list(
@@ -105,11 +109,6 @@ NetObject <- R6::R6Class(
       # Get the type of the pointer
       private$.type <- .clrTypeNameExtPtr(pointer)
       return(self)
-    },
-
-    #' @description Method called on object destruction
-    finalize = function() {
-      private$.pointer <- NULL
     },
 
     # is = function(type) {
